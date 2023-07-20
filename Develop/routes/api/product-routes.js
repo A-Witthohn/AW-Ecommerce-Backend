@@ -26,8 +26,12 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+
+
+
+
 // get one product
-// Get a single product by its ID with associated category and tags
 router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findByPk(req.params.id, {
@@ -55,6 +59,12 @@ router.get('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
+
+
+
+
 
 // create new product
 router.post('/', (req, res) => {
@@ -87,6 +97,10 @@ router.post('/', (req, res) => {
       res.status(400).json(err);
     });
 });
+
+
+
+
 
 // update product
 router.put('/:id', (req, res) => {
@@ -130,8 +144,24 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+
+
+
+
+
   // delete one product by its `id` value
-});
+  router.delete('/:id', async (req, res) => {
+    try {
+      const product = await Product.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+      res.status(200).json(product);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
 
 module.exports = router;
